@@ -1,17 +1,15 @@
 local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
 
----====== Create entity ======---
-
 local entity = spawner.Create({
 	Entity = {
-		Name = "Traumatized",
-		Asset = "https://github.com/catminetry/Traumatized-V1/blob/main/Traumatized.rbxm?raw=true",
+		Name = "Trauma",
+		Asset = "rbxassetid://11546178972=true",
 		HeightOffset = 0
 	},
 	Lights = {
 		Flicker = {
 			Enabled = true,
-			Duration = 10000
+			Duration = 1
 		},
 		Shatter = true,
 		Repair = false
@@ -22,20 +20,20 @@ local entity = spawner.Create({
 		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
 	},
 	Movement = {
-		Speed = 35,
-		Delay = 0,
+		Speed = 800,
+		Delay = 2,
 		Reversed = false
 	},
 	Rebounding = {
 		Enabled = true,
-		Type = "Ambush", -- "Blitz"
+		Type = "Blitz", -- "Ambush"
 		Min = 1,
 		Max = 1,
-		Delay = 2
+		Delay = 0
 	},
 	Damage = {
 		Enabled = true,
-		Range = 1500000,
+		Range = 40,
 		Amount = 125
 	},
 	Crucifixion = {
@@ -46,15 +44,27 @@ local entity = spawner.Create({
 	},
 	Death = {
 		Type = "Guiding", -- "Curious"
-		Hints = {"You died to Traumatized..", "He is a variant of Trauma..", "avoiding him is ez..", "See you next time!!"},
-		Cause = "Traumatized"
+		Hints = {"You die to Trauma", "IT can rebound..", "Be careful..", "Just hide quickly."},
+		Cause = "Trauma"
 	}
 })
 
 ---====== Debug entity ======---
 
 entity:SetCallback("OnSpawned", function()
-    print("Entity has spawned")
+	local Reboundcolor = Instance.new("ColorCorrectionEffect",game.Lighting) game.Debris:AddItem(Reboundcolor,14)
+                Reboundcolor.Name = "bro"
+                Reboundcolor.TintColor = Color3.fromRGB(150, 500, 1) Reboundcolor.Saturation = -0.4 Reboundcolor.Contrast = 0.5
+                game.TweenService:Create(Reboundcolor,TweenInfo.new(15),{TintColor = Color3.fromRGB(265, 2, 24),Saturation = 0, Contrast = 0}):Play()
+	local TweenService = game:GetService("TweenService")
+	local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(233, 25, 257)})
+	local cue2 = Instance.new("Sound")
+	cue2.Parent = game.Workspace
+	cue2.Name = "fear"
+	cue2.SoundId = "https://github.com/MuhXd/Models/blob/main/video0-1-3.mp3?raw=true"
+	cue2.Volume = 1
+	cue2.PlaybackSpeed = 0.1
+	cue2:Play()
 end)
 
 entity:SetCallback("OnStartMoving", function()
@@ -75,7 +85,7 @@ end)
 
 entity:SetCallback("OnLookAt", function(lineOfSight)
 	if lineOfSight == true then
-		game.Players.LocalPlayer.Character.Humanoid:TakeDamage(10)
+		print("Player is looking at entity")
 	else
 		print("Player view is obstructed by something")
 	end
@@ -95,7 +105,6 @@ end)
 
 entity:SetCallback("OnDespawned", function()
     print("Entity has despawned")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Drop56796/Traumatized-Achievement/main/Trauma"))()
 end)
 
 entity:SetCallback("OnDamagePlayer", function(newHealth)
@@ -106,4 +115,10 @@ entity:SetCallback("OnDamagePlayer", function(newHealth)
 	end
 end)
 
+---====== Run entity ======---
+
 entity:Run()
+-- entity:Pause()
+-- entity:Resume()
+-- entity:IsPaused()
+-- entity:Despawn()
